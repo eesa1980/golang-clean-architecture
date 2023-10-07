@@ -13,12 +13,14 @@ func MakeUsersController(
 	app.Get("/users/:id", func(ctx *fiber.Ctx) error {
 		id, _ := strconv.Atoi(ctx.Params("id"))
 		user := deps.Application.GetUserById(id)
-		return ctx.JSON(user)
+
+		return ctx.Status(200).JSON(user)
 	})
 
 	app.Get("/users", func(ctx *fiber.Ctx) error {
 		users := deps.Application.ListUsers()
-		return ctx.JSON(users)
+
+		return ctx.Status(200).JSON(users)
 	})
 
 }

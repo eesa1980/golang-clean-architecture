@@ -1,4 +1,4 @@
-package interfaces
+package application
 
 import (
 	"wire-demo-2/pkg/domain"

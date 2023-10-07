@@ -7,7 +7,7 @@ import (
 	"github.com/google/wire"
 	"wire-demo-2/pkg/application"
 	"wire-demo-2/pkg/infrastructure"
-	. "wire-demo-2/pkg/web"
+	. "wire-demo-2/pkg/web/api"
 	. "wire-demo-2/pkg/web/crosscutting"
 )
 

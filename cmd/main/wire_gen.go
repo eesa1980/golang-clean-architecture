@@ -8,7 +8,6 @@ package main
 
 import (
 	"github.com/google/wire"
-	"net/http"
 	application5 "wire-demo-2/pkg/application"
 	application4 "wire-demo-2/pkg/application/users"
 	application3 "wire-demo-2/pkg/application/users/queries"
@@ -16,13 +15,13 @@ import (
 	application2 "wire-demo-2/pkg/application/users/queries/list-users"
 	infrastructure2 "wire-demo-2/pkg/infrastructure"
 	"wire-demo-2/pkg/infrastructure/repository"
-	"wire-demo-2/pkg/web/controller"
+	"wire-demo-2/pkg/web"
 	"wire-demo-2/pkg/web/crosscutting"
 )
 
 // Injectors from wire.go:
 
-func Initialize() App {
+func Initialize() web.App {
 	iUserService := infrastructure.MakeUserRepository()
 	dependencies := infrastructure2.Dependencies{
 		UserService: iUserService,
@@ -39,26 +38,14 @@ func Initialize() App {
 	applicationDependencies := application5.Dependencies{
 		Users: users,
 	}
-	crosscuttingDependencies := crosscutting.Dependencies{
+	crosscuttingDependencies := &crosscutting.Dependencies{
 		Application:    applicationDependencies,
 		Infrastructure: dependencies,
 	}
-	app := MakeApp(crosscuttingDependencies)
+	app := web.MakeApp(crosscuttingDependencies)
 	return app
 }
 
 // wire.go:
 
-type App struct {
-	MakeApp func()
-}
-
-func MakeApp(
-	deps crosscutting.Dependencies,
-) App {
-	web.MakeController(deps)
-	http.ListenAndServe("localhost:3000", nil)
-	return App{}
-}
-
-var apps = wire.NewSet(wire.Struct(new(crosscutting.Dependencies), "*"), web.MakeController, application5.Set, infrastructure2.Set, MakeApp)
+var apps = wire.NewSet(wire.Struct(new(crosscutting.Dependencies), "*"), application5.Set, infrastructure2.Set, web.MakeApp)

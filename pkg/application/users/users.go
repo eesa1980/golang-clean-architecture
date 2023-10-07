@@ -9,4 +9,7 @@ type Users struct {
 	Queries
 }
 
-var UsersSet = wire.NewSet(QueriesSet, wire.Struct(new(Users), "*"))
+var UsersSet = wire.NewSet(
+	QueriesSet,
+	wire.Struct(new(Users), "*"),
+)

@@ -1,15 +1,21 @@
 package application
 
 import (
-	. "wire-demo-2/pkg/domain"
-	. "wire-demo-2/pkg/infrastructure"
+	"fmt"
+	"wire-demo-2/pkg/domain"
+	"wire-demo-2/pkg/infrastructure"
 )
 
-type GetUserById func(id int) User
+type GetUserById func(id int) domain.User
 
-func MakeGetUserById(deps Dependencies) GetUserById {
-	return func(id int) User {
-		user, _ := deps.UserService.GetUser(id)
+func MakeGetUserById(deps infrastructure.Dependencies) GetUserById {
+	return func(id int) domain.User {
+		user, err := deps.UserService.GetUser(id)
+
+		if err != nil {
+			fmt.Print(err)
+		}
+
 		return user
 	}
 }

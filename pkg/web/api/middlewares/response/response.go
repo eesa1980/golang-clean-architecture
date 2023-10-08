@@ -5,6 +5,6 @@ import (
 	. "wire-demo-2/pkg/web/crosscutting"
 )
 
-func OnResponse(app *fiber.App, deps *Dependencies) {
+func MakeResponse(app *fiber.App, deps *Dependencies) {
 	app.Get("*", MakeHandleNotFound())
 }

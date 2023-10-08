@@ -1,7 +1,7 @@
 package application
 
 import (
-	"fmt"
+	. "wire-demo-2/pkg/application/common/exceptions"
 	"wire-demo-2/pkg/domain"
 	"wire-demo-2/pkg/infrastructure"
 )
@@ -9,11 +9,15 @@ import (
 type GetUserById func(id int) domain.User
 
 func MakeGetUserById(deps infrastructure.Dependencies) GetUserById {
+
 	return func(id int) domain.User {
+
 		user, err := deps.UserService.GetUser(id)
 
 		if err != nil {
-			fmt.Print(err)
+			panic(&NotFoundException{
+				Message: err.Error(),
+			})
 		}
 
 		return user

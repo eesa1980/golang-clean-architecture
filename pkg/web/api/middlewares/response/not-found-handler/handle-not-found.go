@@ -1,14 +1,13 @@
-package web
+package notfoundhandler
 
 import (
 	"github.com/gofiber/fiber/v2"
-	. "wire-demo-2/pkg/application/common/exceptions"
+	"wire-demo-2/pkg/application/common/exception"
 )
 
-func MakeHandleNotFound() func(ctx *fiber.Ctx) error {
-
+func New() func(ctx *fiber.Ctx) error {
 	return func(ctx *fiber.Ctx) error {
-		return ctx.Status(404).JSON(Exception{
+		return ctx.Status(404).JSON(exception.Exception{
 			Message:     "Unable to find the requested resource",
 			StatusCode:  404,
 			Title:       "Not Found",

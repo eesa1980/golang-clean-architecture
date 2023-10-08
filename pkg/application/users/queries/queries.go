@@ -2,17 +2,17 @@ package application
 
 import (
 	"github.com/google/wire"
-	. "wire-demo-2/pkg/application/users/queries/get-user"
-	. "wire-demo-2/pkg/application/users/queries/list-users"
+	"wire-demo-2/pkg/application/users/queries/get-user"
+	"wire-demo-2/pkg/application/users/queries/list-users"
 )
 
 type Queries struct {
-	GetUserById GetUserById
-	ListUsers   ListUsers
+	getuserbyid.GetUserById
+	listusers.ListUsers
 }
 
 var QueriesSet = wire.NewSet(
-	MakeGetUserById,
-	MakeListUsers,
+	getuserbyid.New,
+	listusers.New,
 	wire.Struct(new(Queries), "*"),
 )

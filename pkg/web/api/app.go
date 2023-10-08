@@ -1,32 +1,33 @@
-package api
+package app
 
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	. "wire-demo-2/pkg/web/api/controllers/users-controller"
-	. "wire-demo-2/pkg/web/api/middlewares/request"
-	. "wire-demo-2/pkg/web/api/middlewares/response"
-	. "wire-demo-2/pkg/web/crosscutting"
+	"wire-demo-2/pkg/web/api/controllers/users-controller"
+	requesthandler "wire-demo-2/pkg/web/api/middlewares/request"
+	"wire-demo-2/pkg/web/api/middlewares/response"
+	"wire-demo-2/pkg/web/api/middlewares/response/exception-handler"
+	"wire-demo-2/pkg/web/crosscutting"
 )
 
 type App struct {
 	MakeApp func()
 }
 
-func MakeApp(
-	deps *Dependencies,
+func New(
+	deps *container.Dependencies,
 ) App {
 	app := *fiber.New(
 		fiber.Config{
-			ErrorHandler: MakeHandleException(deps),
+			ErrorHandler: exceptionhandler.New(deps),
 		})
 
 	app.Use(recover.New())
 
-	MakeRequest(&app, deps)
-	MakeUsersController(&app, deps)
-	MakeResponse(&app, deps)
+	requesthandler.New(&app, deps)
+	userscontroller.New(&app, deps)
+	responsehandler.New(&app, deps)
 
 	err := app.Listen(":3000")
 

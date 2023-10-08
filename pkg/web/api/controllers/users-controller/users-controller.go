@@ -1,4 +1,4 @@
-package web
+package userscontroller
 
 import (
 	"github.com/gofiber/fiber/v2"
@@ -6,7 +6,7 @@ import (
 	. "wire-demo-2/pkg/web/crosscutting"
 )
 
-func MakeUsersController(
+func New(
 	app *fiber.App,
 	deps *Dependencies,
 ) {

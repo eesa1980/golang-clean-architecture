@@ -1,56 +1,56 @@
-package web
+package exceptionhandler
 
 import (
 	"encoding/json"
 	"errors"
 	"github.com/gofiber/fiber/v2"
-	. "wire-demo-2/pkg/application/common/exceptions"
+	"wire-demo-2/pkg/application/common/exception"
 	"wire-demo-2/pkg/web/crosscutting"
 )
 
 type HandleException func(ctx *fiber.Ctx, err error) error
 
-func MakeHandleException(deps *crosscutting.Dependencies) HandleException {
+func New(deps *container.Dependencies) HandleException {
 	return func(ctx *fiber.Ctx, err error) error {
-		var exception Exception
+		var e exception.Exception
 
-		var internalServerError *InternalServerException
-		var badRequestError *BadRequestException
-		var httpError *HttpException
-		var notFoundError *NotFoundException
+		var internalServerError *exception.InternalServer
+		var badRequestError *exception.BadRequest
+		var httpError *exception.Http
+		var notFoundError *exception.NotFound
 
 		switch {
 		case errors.As(err, &httpError):
-			exception = httpException(httpError)
+			e = httpException(httpError)
 			break
 		case errors.As(err, &notFoundError):
-			exception = notFoundException(notFoundError)
+			e = notFoundException(notFoundError)
 			break
 		case errors.As(err, &badRequestError):
-			exception = badRequestException(badRequestError)
+			e = badRequestException(badRequestError)
 			break
 		case errors.As(err, &internalServerError):
-			exception = internalServerException(internalServerError)
+			e = internalServerException(internalServerError)
 			break
 		default:
-			exception = internalServerException(&InternalServerException{
+			e = internalServerException(&exception.InternalServer{
 				Message: err.Error(),
 			})
 		}
 
-		stringified, err := json.Marshal(exception)
+		stringified, err := json.Marshal(e)
 
 		if err != nil {
-			return ctx.Status(exception.StatusCode).JSON(stringified)
+			return ctx.Status(e.StatusCode).JSON(stringified)
 		}
 
-		return ctx.Status(exception.StatusCode).JSON(exception)
+		return ctx.Status(e.StatusCode).JSON(e)
 	}
 
 }
 
-func badRequestException(e *BadRequestException) Exception {
-	return Exception{
+func badRequestException(e *exception.BadRequest) exception.Exception {
+	return exception.Exception{
 		Explanation: "https://tools.ietf.org/html/rfc7231#section-6.5.1",
 		Message:     e.Message,
 		StatusCode:  400,
@@ -58,8 +58,8 @@ func badRequestException(e *BadRequestException) Exception {
 	}
 }
 
-func httpException(e *HttpException) Exception {
-	return Exception{
+func httpException(e *exception.Http) exception.Exception {
+	return exception.Exception{
 		Explanation: "https://tools.ietf.org/html/rfc7231#section-6.5.4",
 		Message:     e.Message,
 		StatusCode:  e.StatusCode,
@@ -67,8 +67,8 @@ func httpException(e *HttpException) Exception {
 	}
 }
 
-func internalServerException(e *InternalServerException) Exception {
-	return Exception{
+func internalServerException(e *exception.InternalServer) exception.Exception {
+	return exception.Exception{
 		Explanation: "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
 		Message:     e.Error(),
 		StatusCode:  500,
@@ -76,8 +76,8 @@ func internalServerException(e *InternalServerException) Exception {
 	}
 }
 
-func notFoundException(e *NotFoundException) Exception {
-	return Exception{
+func notFoundException(e *exception.NotFound) exception.Exception {
+	return exception.Exception{
 		Explanation: "https://tools.ietf.org/html/rfc7231#section-6.5.4",
 		Message:     e.Message,
 		StatusCode:  404,

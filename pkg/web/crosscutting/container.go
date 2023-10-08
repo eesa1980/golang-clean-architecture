@@ -1,4 +1,4 @@
-package crosscutting
+package container
 
 import (
 	"wire-demo-2/pkg/application"

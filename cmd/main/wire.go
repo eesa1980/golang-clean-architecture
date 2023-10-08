@@ -7,18 +7,18 @@ import (
 	"github.com/google/wire"
 	"wire-demo-2/pkg/application"
 	"wire-demo-2/pkg/infrastructure"
-	. "wire-demo-2/pkg/web/api"
-	. "wire-demo-2/pkg/web/crosscutting"
+	"wire-demo-2/pkg/web/api"
+	"wire-demo-2/pkg/web/crosscutting"
 )
 
 var apps = wire.NewSet(
-	wire.Struct(new(Dependencies), "*"),
+	wire.Struct(new(container.Dependencies), "*"),
 	application.Set,
 	infrastructure.Set,
-	MakeApp,
+	app.New,
 )
 
-func Initialize() App {
+func Initialize() app.App {
 	wire.Build(apps)
-	return App{}
+	return app.App{}
 }

@@ -2,15 +2,17 @@ package infrastructure
 
 import (
 	"github.com/google/wire"
-	. "wire-demo-2/pkg/application/common/interfaces"
-	. "wire-demo-2/pkg/infrastructure/repository"
+	"wire-demo-2/pkg/infrastructure/repository"
+	"wire-demo-2/pkg/infrastructure/service"
 )
 
 type Dependencies struct {
-	UserService IUserService
+	repositories.Repositories
+	services.Services
 }
 
 var Set = wire.NewSet(
-	MakeUserRepository,
+	repositories.RepositorySet,
+	services.ServiceSet,
 	wire.Struct(new(Dependencies), "*"),
 )

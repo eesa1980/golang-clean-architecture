@@ -1,15 +1,15 @@
-package application
+package listusers
 
 import (
-	. "wire-demo-2/pkg/domain"
-	. "wire-demo-2/pkg/infrastructure"
+	"wire-demo-2/pkg/domain"
+	"wire-demo-2/pkg/infrastructure"
 )
 
-type ListUsers func() []User
+type ListUsers func() []domain.User
 
-func MakeListUsers(deps Dependencies) ListUsers {
-	return func() []User {
-		users, _ := deps.UserService.ListUsers()
+func New(deps infrastructure.Dependencies) ListUsers {
+	return func() []domain.User {
+		users, _ := deps.UserRepository.ListUsers()
 		return users
 	}
 }

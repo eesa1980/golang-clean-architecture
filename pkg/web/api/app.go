@@ -20,7 +20,7 @@ func New(
 ) App {
 	app := *fiber.New(
 		fiber.Config{
-			ErrorHandler: exceptionhandler.New(deps),
+			ErrorHandler: exceptionhandler.New(),
 		})
 
 	app.Use(recover.New())

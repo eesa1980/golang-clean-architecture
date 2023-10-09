@@ -1,7 +1,7 @@
 package getuserbyid
 
 import (
-	"wire-demo-2/pkg/application/common/exception"
+	. "wire-demo-2/pkg/application/common/exception"
 	"wire-demo-2/pkg/domain"
 	"wire-demo-2/pkg/infrastructure"
 )
@@ -15,9 +15,7 @@ func New(deps infrastructure.Dependencies) GetUserById {
 		user, err := deps.UserRepository.GetUser(id)
 
 		if err != nil {
-			panic(&exception.NotFound{
-				Message: err.Error(),
-			})
+			panic(NewException[NotFound](err.Error()))
 		}
 
 		return user

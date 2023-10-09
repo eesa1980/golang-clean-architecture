@@ -1,31 +1,36 @@
 package userrepository
 
 import (
+	"encoding/json"
 	"errors"
 	"wire-demo-2/pkg/application/common/interfaces"
 	"wire-demo-2/pkg/domain"
 )
 
-type dependencies struct {
-	interfaces.IJSONFileHandler
+type userRepository struct {
+	interfaces.IFileHandlerService
 }
 
-func readUsers(d *dependencies) *[]domain.User {
-	jsonUsers, _ := d.Load()
-	var users []domain.User
-	err := jsonUsers.Decode(&users)
+// getUsersFromJson is a helper function to get users from a json file
+func getUsersFromJson(u *userRepository) *[]domain.User {
+	file, _ := u.Load("mock-user-data.json")
+	decoder := json.NewDecoder(file)
+
+	var users *[]domain.User
+	err := decoder.Decode(&users)
 
 	if err != nil {
 		panic(err)
 	}
 
-	defer d.Close()
+	defer u.Close()
 
-	return &users
+	return users
 }
 
-func (deps *dependencies) GetUser(id int) (domain.User, error) {
-	var users []domain.User = *readUsers(deps)
+// GetUser is a method on the userRepository struct that returns a user by id
+func (u *userRepository) GetUser(id int) (domain.User, error) {
+	var users []domain.User = *getUsersFromJson(u)
 
 	for _, user := range users {
 		if user.ID == id {
@@ -33,19 +38,18 @@ func (deps *dependencies) GetUser(id int) (domain.User, error) {
 		}
 	}
 
-	defer deps.Close()
-
-	return domain.User{}, errors.New("user not found")
+	return domain.User{}, errors.New("User not found")
 
 }
 
-func (deps *dependencies) ListUsers() ([]domain.User, error) {
-	var users []domain.User = *readUsers(deps)
+// ListUsers is a method on the userRepository struct that returns a list of users
+func (u *userRepository) ListUsers() ([]domain.User, error) {
+	var users []domain.User = *getUsersFromJson(u)
 	return users, nil
 }
 
-func New(jsonFileHandler interfaces.IJSONFileHandler) interfaces.IUserRepository {
-	return &dependencies{
-		jsonFileHandler,
+func New(fileHandlerService interfaces.IFileHandlerService) interfaces.IUserRepository {
+	return &userRepository{
+		fileHandlerService,
 	}
 }

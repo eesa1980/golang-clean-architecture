@@ -1,21 +1,20 @@
-package jsonfilehandler
+package filehandlerservice
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"wire-demo-2/pkg/application/common/interfaces"
 )
 
-type JSONFileHandler struct {
+type FileHandlerService struct {
 }
 
 var (
 	file *os.File
 )
 
-func (c JSONFileHandler) Load() (*json.Decoder, error) {
-	opened, err := os.Open("mock-user-data.json")
+func (f FileHandlerService) Load(filename string) (*os.File, error) {
+	opened, err := os.Open(filename)
 
 	file = opened
 
@@ -25,12 +24,10 @@ func (c JSONFileHandler) Load() (*json.Decoder, error) {
 		fmt.Println("Opening json file")
 	}
 
-	decoder := json.NewDecoder(file)
-
-	return decoder, nil
+	return file, err
 }
 
-func (c JSONFileHandler) Close() {
+func (f FileHandlerService) Close() {
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
@@ -41,6 +38,6 @@ func (c JSONFileHandler) Close() {
 	}(file)
 }
 
-func New() interfaces.IJSONFileHandler {
-	return JSONFileHandler{}
+func New() interfaces.IFileHandlerService {
+	return FileHandlerService{}
 }

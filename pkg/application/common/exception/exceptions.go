@@ -13,19 +13,24 @@ type Http struct {
 }
 
 type NotFound struct {
-	Message string
+	StatusCode int
+	Message    string
 }
 
 type BadRequest struct {
-	Message string
+	StatusCode int
+	Message    string
 }
 
 type InternalServer struct {
-	Message string
+	StatusCode int
+	Message    string
 }
 
-func (e *Http) Error() string {
-	return e.Message
+type Custom struct {
+	StatusCode int
+	Title      string
+	Message    string
 }
 
 func (e *NotFound) Error() string {
@@ -38,4 +43,27 @@ func (e *InternalServer) Error() string {
 
 func (e *BadRequest) Error() string {
 	return e.Message
+}
+
+func (e *Custom) Error() string {
+	return e.Message
+}
+
+func (e *Exception) Error() string {
+	return e.Message
+}
+
+// NewException is a generic function that returns a pointer to an exception
+func NewException[E NotFound | InternalServer | BadRequest](message string) *E {
+	return &E{
+		Message: message,
+	}
+}
+
+// NewCustomException is a generic function that returns a pointer to a custom exception
+func NewCustomException(statusCode int, message string) *Custom {
+	return &Custom{
+		Message:    message,
+		StatusCode: statusCode,
+	}
 }

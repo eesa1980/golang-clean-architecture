@@ -1,9 +1,9 @@
 package getuserbyid
 
 import (
-	. "wire-demo-2/pkg/application/common/exception"
-	"wire-demo-2/pkg/domain"
-	"wire-demo-2/pkg/infrastructure"
+	. "clean-architecture/pkg/application/common/exception"
+	"clean-architecture/pkg/domain"
+	"clean-architecture/pkg/infrastructure"
 )
 
 type GetUserById func(id int) domain.User

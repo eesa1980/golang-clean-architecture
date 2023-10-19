@@ -1,8 +1,8 @@
 package application
 
 import (
+	. "clean-architecture/pkg/application/users"
 	"github.com/google/wire"
-	. "wire-demo-2/pkg/application/users"
 )
 
 type Dependencies struct {

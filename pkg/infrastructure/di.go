@@ -1,9 +1,9 @@
 package infrastructure
 
 import (
+	"clean-architecture/pkg/infrastructure/repository"
+	"clean-architecture/pkg/infrastructure/service"
 	"github.com/google/wire"
-	"wire-demo-2/pkg/infrastructure/repository"
-	"wire-demo-2/pkg/infrastructure/service"
 )
 
 type Dependencies struct {

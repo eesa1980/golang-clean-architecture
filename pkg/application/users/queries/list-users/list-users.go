@@ -1,8 +1,8 @@
 package listusers
 
 import (
-	"wire-demo-2/pkg/domain"
-	"wire-demo-2/pkg/infrastructure"
+	"clean-architecture/pkg/domain"
+	"clean-architecture/pkg/infrastructure"
 )
 
 type ListUsers func() []domain.User

@@ -4,11 +4,11 @@
 package main
 
 import (
+	"clean-architecture/pkg/application"
+	"clean-architecture/pkg/infrastructure"
+	"clean-architecture/pkg/web/api"
+	"clean-architecture/pkg/web/crosscutting"
 	"github.com/google/wire"
-	"wire-demo-2/pkg/application"
-	"wire-demo-2/pkg/infrastructure"
-	"wire-demo-2/pkg/web/api"
-	"wire-demo-2/pkg/web/crosscutting"
 )
 
 var apps = wire.NewSet(

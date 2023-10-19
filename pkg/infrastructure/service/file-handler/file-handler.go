@@ -1,9 +1,10 @@
 package filehandlerservice
 
 import (
+	"clean-architecture/pkg/application/common/interfaces"
+	"encoding/json"
 	"fmt"
 	"os"
-	"wire-demo-2/pkg/application/common/interfaces"
 )
 
 type FileHandlerService struct {
@@ -13,7 +14,7 @@ var (
 	file *os.File
 )
 
-func (f FileHandlerService) Load(filename string) (*os.File, error) {
+func (f *FileHandlerService) LoadFile(filename string) (*os.File, error) {
 	opened, err := os.Open(filename)
 
 	file = opened
@@ -27,7 +28,7 @@ func (f FileHandlerService) Load(filename string) (*os.File, error) {
 	return file, err
 }
 
-func (f FileHandlerService) Close() {
+func (f *FileHandlerService) Close() {
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
@@ -38,6 +39,22 @@ func (f FileHandlerService) Close() {
 	}(file)
 }
 
+func (f *FileHandlerService) ToJson() (*any, error) {
+	return func(file *os.File) (*any, error) {
+		decoder := json.NewDecoder(file)
+
+		var j *any
+		err := decoder.Decode(&j)
+
+		if err != nil {
+			panic(err)
+		}
+
+		return j, err
+
+	}(file)
+}
+
 func New() interfaces.IFileHandlerService {
-	return FileHandlerService{}
+	return &FileHandlerService{}
 }

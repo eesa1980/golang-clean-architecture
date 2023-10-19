@@ -1,5 +1,6 @@
 /.idea/
 /cmd/main/wire_gen.go
-/wire-demo-2.iml
+/clean-architecture.iml
 .DS_Store
 clean-architecture.iml
+/node_modules/

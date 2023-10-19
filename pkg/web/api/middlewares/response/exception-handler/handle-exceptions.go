@@ -1,10 +1,10 @@
 package exceptionhandler
 
 import (
+	"clean-architecture/pkg/application/common/exception"
 	"encoding/json"
 	"errors"
 	"github.com/gofiber/fiber/v2"
-	"wire-demo-2/pkg/application/common/exception"
 )
 
 type HandleException func(ctx *fiber.Ctx, err error) error

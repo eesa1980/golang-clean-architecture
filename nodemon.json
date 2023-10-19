@@ -1,0 +1,5 @@
+{
+  "verbose": true,
+  "ignore": ["cmd/", "pkg/web/api/api-docs"],
+  "ext": "go, json"
+}

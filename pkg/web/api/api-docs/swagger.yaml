@@ -1,0 +1,81 @@
+definitions:
+  domain.User:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      lastname:
+        type: string
+    type: object
+  exception.Exception:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      statusCode:
+        type: integer
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is an example server for a Clean Architecture API written in Go.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Clean Architecture API
+  version: "1.0"
+paths:
+  /api/v1/users:
+    get:
+      description: Get all users
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.Exception'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/exception.Exception'
+      summary: Get all users
+      tags:
+      - Users
+  /api/v1/users/{id}:
+    get:
+      description: Get user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.Exception'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/exception.Exception'
+      summary: Get user by ID
+      tags:
+      - Users
+swagger: "2.0"

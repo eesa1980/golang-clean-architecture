@@ -1,8 +1,8 @@
 package application
 
 import (
+	. "clean-architecture/pkg/application/users/queries"
 	"github.com/google/wire"
-	. "wire-demo-2/pkg/application/users/queries"
 )
 
 type Users struct {

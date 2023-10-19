@@ -1,8 +1,8 @@
 package notfoundhandler
 
 import (
+	"clean-architecture/pkg/application/common/exception"
 	"github.com/gofiber/fiber/v2"
-	"wire-demo-2/pkg/application/common/exception"
 )
 
 func New() func(ctx *fiber.Ctx) error {

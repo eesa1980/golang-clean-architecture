@@ -1,9 +1,9 @@
 package services
 
 import (
+	"clean-architecture/pkg/application/common/interfaces"
+	filehandler "clean-architecture/pkg/infrastructure/service/file-handler"
 	"github.com/google/wire"
-	"wire-demo-2/pkg/application/common/interfaces"
-	filehandler "wire-demo-2/pkg/infrastructure/service/file-handler"
 )
 
 type Services struct {

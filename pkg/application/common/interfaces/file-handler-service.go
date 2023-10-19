@@ -5,6 +5,7 @@ import (
 )
 
 type IFileHandlerService interface {
-	Load(filename string) (*os.File, error)
+	LoadFile(filename string) (*os.File, error)
+	ToJson() (*any, error)
 	Close()
 }

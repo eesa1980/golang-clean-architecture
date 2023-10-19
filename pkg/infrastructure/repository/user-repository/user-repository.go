@@ -1,10 +1,10 @@
 package userrepository
 
 import (
+	"clean-architecture/pkg/application/common/interfaces"
+	"clean-architecture/pkg/domain"
 	"encoding/json"
 	"errors"
-	"wire-demo-2/pkg/application/common/interfaces"
-	"wire-demo-2/pkg/domain"
 )
 
 type userRepository struct {
@@ -13,7 +13,7 @@ type userRepository struct {
 
 // getUsersFromJson is a helper function to get users from a json file
 func getUsersFromJson(u *userRepository) *[]domain.User {
-	file, _ := u.Load("mock-user-data.json")
+	file, _ := u.LoadFile("mock-user-data.json")
 	decoder := json.NewDecoder(file)
 
 	var users *[]domain.User

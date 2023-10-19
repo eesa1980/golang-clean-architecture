@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-	"wire-demo-2/pkg/domain"
+	"clean-architecture/pkg/domain"
 )
 
 type IUserRepository interface {

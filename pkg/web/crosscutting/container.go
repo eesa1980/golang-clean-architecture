@@ -1,8 +1,8 @@
 package container
 
 import (
-	"wire-demo-2/pkg/application"
-	"wire-demo-2/pkg/infrastructure"
+	"clean-architecture/pkg/application"
+	"clean-architecture/pkg/infrastructure"
 )
 
 type Dependencies struct {

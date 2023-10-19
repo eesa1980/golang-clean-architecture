@@ -1,9 +1,34 @@
-# Wire Demo
+# Installation instructions for Mac
 
-### Start the server
-```
-$ wire cmd/main/wire.go
-$ go run ./cmd/main .
+## Prerequisites
+
+### Install go
+[Installation instructions](https://go.dev/doc/install)
+
+### Install make
+https://formulae.brew.sh/formula/make
+```bash
+$ brew install make
 ```
 
-More docs to com
+### Install wire
+https://github.com/google/wire
+```bash
+$ go get github.com/google/wire/cmd/wire
+```
+
+### Install NPM (optional, for hot-reloading with nodemon)
+https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+## Starting project
+```bash
+# EITHER NPM
+$ npm install # only needed once
+$ npm run dev # hot-reloading
+
+# OR MAKE
+$ make install # only needed once
+$ make run
+```
+
+then navigate to http://localhost:3000/swagger to see the swagger docs

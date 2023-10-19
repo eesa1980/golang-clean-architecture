@@ -1,16 +1,20 @@
 package requesthandler
 
 import (
+	"clean-architecture/pkg/web/api/middlewares/request/docs-handler"
+	. "clean-architecture/pkg/web/crosscutting"
 	"github.com/gofiber/fiber/v2"
-	. "wire-demo-2/pkg/web/crosscutting"
+	"github.com/gofiber/swagger"
 )
 
-func New(app *fiber.App, deps *Dependencies) {
-	app.Get("/", func(ctx *fiber.Ctx) error {
-		return ctx.SendString("Hello, World 👋!")
-	})
+func heartbeat() func(ctx *fiber.Ctx) error {
+	return func(ctx *fiber.Ctx) error {
+		return ctx.SendString("hello W")
+	}
+}
 
-	app.Get("/api-docs", func(ctx *fiber.Ctx) error {
-		return ctx.SendString("Not Implemented yet")
-	})
+func New(app *fiber.App, deps *Dependencies) {
+	app.Get("/heartbeat", heartbeat())
+	app.Get("/swagger/docs", docshandler.New(deps))
+	app.Get("/swagger/*", swagger.New(swagger.Config{URL: "/swagger/docs"}))
 }

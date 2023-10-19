@@ -4,3 +4,4 @@
 .DS_Store
 clean-architecture.iml
 /node_modules/
+/.env

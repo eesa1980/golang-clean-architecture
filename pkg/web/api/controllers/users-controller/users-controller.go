@@ -55,5 +55,5 @@ func New(
 	v1 := app.Group("/api/v1/users")
 
 	v1.Get("/:id", getUserByIdController(deps))
-	v1.Get("/test/123", listUsersController(deps))
+	v1.Get("/", listUsersController(deps))
 }

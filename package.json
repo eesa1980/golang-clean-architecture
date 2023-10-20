@@ -3,10 +3,14 @@
   "scripts": {
     "preinstall": "cp .env.example .env",
     "install": "make install",
-    "dev": "nodemon --watch ./pkg --exec make run --signal SIGTERM",
+    "dev": "nodemon --watch ./pkg --exec make dev --signal SIGTERM",
+    "build:prod": "make build_prod",
+    "prod": "make prod",
     "lint": "make lint"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
     "nodemon": "^3.0.1"
   }
 }

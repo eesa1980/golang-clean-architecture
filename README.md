@@ -11,6 +11,12 @@ https://formulae.brew.sh/formula/make
 $ brew install make
 ```
 
+### Install pre-commit
+https://pre-commit.com/#install
+```bash
+$ brew install pre-commit
+```
+
 ### Install NPM (optional, for hot-reloading with nodemon)
 https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 

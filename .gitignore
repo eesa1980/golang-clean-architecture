@@ -1,5 +1,4 @@
 /.idea/
-/cmd/main/wire_gen.go
 /clean-architecture.iml
 .DS_Store
 clean-architecture.iml

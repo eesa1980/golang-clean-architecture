@@ -4,6 +4,7 @@ import (
 	"clean-architecture/pkg/application/common/exception"
 	"encoding/json"
 	"errors"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -21,16 +22,12 @@ func New() HandleException {
 		switch {
 		case errors.As(err, &badRequestError):
 			e = badRequestException(badRequestError)
-			break
 		case errors.As(err, &customError):
 			e = customException(customError)
-			break
 		case errors.As(err, &internalServerError):
 			e = internalServerException(internalServerError)
-			break
 		case errors.As(err, &notFoundError):
 			e = notFoundException(notFoundError)
-			break
 		default:
 			e = internalServerException(&exception.InternalServer{
 				Message: err.Error(),

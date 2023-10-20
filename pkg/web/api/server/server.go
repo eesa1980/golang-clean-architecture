@@ -2,8 +2,11 @@ package server
 
 import (
 	"clean-architecture/pkg/web/api/app"
-	"clean-architecture/pkg/web/crosscutting"
+	container "clean-architecture/pkg/web/crosscutting"
 	"fmt"
+
+	"github.com/gofiber/fiber/v2"
+
 	"github.com/gofiber/fiber/v2/log"
 )
 
@@ -25,13 +28,18 @@ func New(
 
 	config := deps.Infrastructure.Config
 
-	url := fmt.Sprintf("%s:%s", config.BaseUrl, config.Port)
+	url := fmt.Sprintf(":%s", config.Port)
 	log.Infof("Application is now running on http://%s/swagger", url)
 
 	err := newApp.Listen(url)
 
 	if err != nil {
-		defer newApp.Shutdown()
+		defer func(newApp *fiber.App) {
+			err := newApp.Shutdown()
+			if err != nil {
+				panic(err)
+			}
+		}(newApp)
 		// stop the application
 		panic(err)
 	}

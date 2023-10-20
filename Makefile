@@ -1,5 +1,7 @@
 install:
 	go mod download
+	go get github.com/google/wire/cmd/wire@latest
+	go install github.com/securego/gosec/v2/cmd/gosec@latest
 
 tidy:
 	go mod tidy
@@ -13,6 +15,9 @@ build: tidy swagger_gen
 
 dev: build
 	go run ./cmd/main .
+
+lint:
+	gosec ./...
 
 run: dev
 	echo "Running the project..."

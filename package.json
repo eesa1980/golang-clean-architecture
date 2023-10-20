@@ -1,13 +1,11 @@
 {
   "name": "clean-architecture-golang",
-  "version": "1.0.0",
-  "description": "",
   "scripts": {
+    "preinstall": "cp .env.example .env",
     "install": "make install",
-    "dev": "nodemon --watch ./pkg --exec make run --signal SIGTERM"
+    "dev": "nodemon --watch ./pkg --exec make run --signal SIGTERM",
+    "lint": "make lint"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.1"
   }

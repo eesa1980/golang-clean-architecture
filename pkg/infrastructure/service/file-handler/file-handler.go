@@ -3,8 +3,8 @@ package filehandlerservice
 import (
 	"clean-architecture/pkg/application/common/interfaces"
 	"encoding/json"
-	"fmt"
 	"os"
+	"path/filepath"
 )
 
 type FileHandlerService struct {
@@ -15,14 +15,12 @@ var (
 )
 
 func (f *FileHandlerService) LoadFile(filename string) (*os.File, error) {
-	opened, err := os.Open(filename)
+	opened, err := os.Open(filepath.Clean(filename))
 
 	file = opened
 
 	if err != nil {
 		panic(err)
-	} else {
-		fmt.Println("Opening json file")
 	}
 
 	return file, err
@@ -33,8 +31,6 @@ func (f *FileHandlerService) Close() {
 		err := file.Close()
 		if err != nil {
 			panic(err)
-		} else {
-			fmt.Println("Closing json file")
 		}
 	}(file)
 }

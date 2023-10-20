@@ -11,12 +11,6 @@ https://formulae.brew.sh/formula/make
 $ brew install make
 ```
 
-### Install wire
-https://github.com/google/wire
-```bash
-$ go get github.com/google/wire/cmd/wire
-```
-
 ### Install NPM (optional, for hot-reloading with nodemon)
 https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 

@@ -20,8 +20,8 @@ import (
 //	@Tags			Users
 func getUserByIdController(
 	deps *Dependencies,
-) func(ctx *fiber.Ctx) error {
-	return func(ctx *fiber.Ctx) error {
+) (string, fiber.Handler) {
+	return "/:id", func(ctx *fiber.Ctx) error {
 		id, _ := strconv.Atoi(ctx.Params("id"))
 		user := deps.Application.Users.GetUserById(id)
 
@@ -40,8 +40,8 @@ func getUserByIdController(
 //	@Tags			Users
 func listUsersController(
 	deps *Dependencies,
-) func(ctx *fiber.Ctx) error {
-	return func(ctx *fiber.Ctx) error {
+) (string, fiber.Handler) {
+	return "/", func(ctx *fiber.Ctx) error {
 		users := deps.Application.Users.ListUsers()
 
 		return ctx.Status(200).JSON(users)
@@ -54,6 +54,6 @@ func New(
 ) {
 	v1 := app.Group("/api/v1/users")
 
-	v1.Get("/:id", getUserByIdController(deps))
-	v1.Get("/", listUsersController(deps))
+	v1.Get(getUserByIdController(deps))
+	v1.Get(listUsersController(deps))
 }

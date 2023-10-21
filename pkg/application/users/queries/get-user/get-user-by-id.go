@@ -2,17 +2,17 @@ package getuserbyid
 
 import (
 	. "clean-architecture/pkg/application/common/exception"
+	"clean-architecture/pkg/application/common/interfaces"
 	"clean-architecture/pkg/domain"
-	"clean-architecture/pkg/infrastructure"
 )
 
 type GetUserById func(id int) domain.User
 
-func New(deps infrastructure.Dependencies) GetUserById {
+func New(userRepository interfaces.IUserRepository) GetUserById {
 
 	return func(id int) domain.User {
 
-		user, err := deps.UserRepository.GetUser(id)
+		user, err := userRepository.GetUser(id)
 
 		if err != nil {
 			panic(NewException[NotFound](err.Error()))

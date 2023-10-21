@@ -27,9 +27,10 @@ import (
 // Injectors from wire.go:
 
 func Initialize() server.Server {
-	applicationConfig := confighandler.New()
 	iFileHandlerService := filehandlerservice.New()
 	iUserRepository := userrepository.New(iFileHandlerService)
+	getUserById := getuserbyid.New(iUserRepository)
+	applicationConfig := confighandler.New()
 	repositoriesRepositories := repositories.Repositories{
 		Config:         applicationConfig,
 		UserRepository: iUserRepository,
@@ -41,7 +42,6 @@ func Initialize() server.Server {
 		Repositories: repositoriesRepositories,
 		Services:     servicesServices,
 	}
-	getUserById := getuserbyid.New(dependencies)
 	listUsers := listusers.New(dependencies)
 	queries := application.Queries{
 		GetUserById: getUserById,

@@ -4,9 +4,12 @@
     "preinstall": "cp .env.example .env",
     "install": "make install",
     "dev": "nodemon --watch ./pkg --exec make dev --signal SIGTERM",
+    "build:dev": "make build_dev",
     "build:prod": "make build_prod",
     "prod": "make prod",
-    "lint": "make lint"
+    "lint": "make lint",
+    "docker:build": "npm run build:prod && make docker_build",
+    "docker:run": "make docker_run"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.0.0",

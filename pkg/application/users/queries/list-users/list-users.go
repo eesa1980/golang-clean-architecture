@@ -1,15 +1,17 @@
 package listusers
 
 import (
+	"clean-architecture/pkg/application/common/interfaces"
 	"clean-architecture/pkg/domain"
-	"clean-architecture/pkg/infrastructure"
 )
 
 type ListUsers func() []domain.User
+type IUserRepository interfaces.IUserRepository
 
-func New(deps infrastructure.Dependencies) ListUsers {
+func New(userRepository interfaces.IUserRepository) ListUsers {
 	return func() []domain.User {
-		users, _ := deps.UserRepository.ListUsers()
+		users, _ := userRepository.ListUsers()
+
 		return users
 	}
 }

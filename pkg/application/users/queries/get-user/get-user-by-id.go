@@ -7,6 +7,7 @@ import (
 )
 
 type GetUserById func(id int) domain.User
+type IUserRepository interfaces.IUserRepository
 
 func New(userRepository interfaces.IUserRepository) GetUserById {
 

@@ -30,6 +30,17 @@ func Initialize() server.Server {
 	iFileHandlerService := filehandlerservice.New()
 	iUserRepository := userrepository.New(iFileHandlerService)
 	getUserById := getuserbyid.New(iUserRepository)
+	listUsers := listusers.New(iUserRepository)
+	queries := application.Queries{
+		GetUserById: getUserById,
+		ListUsers:   listUsers,
+	}
+	users := application2.Users{
+		Queries: queries,
+	}
+	dependencies := application3.Dependencies{
+		Users: users,
+	}
 	applicationConfig := confighandler.New()
 	repositoriesRepositories := repositories.Repositories{
 		Config:         applicationConfig,
@@ -38,24 +49,13 @@ func Initialize() server.Server {
 	servicesServices := services.Services{
 		FileHandler: iFileHandlerService,
 	}
-	dependencies := infrastructure.Dependencies{
+	infrastructureDependencies := infrastructure.Dependencies{
 		Repositories: repositoriesRepositories,
 		Services:     servicesServices,
 	}
-	listUsers := listusers.New(dependencies)
-	queries := application.Queries{
-		GetUserById: getUserById,
-		ListUsers:   listUsers,
-	}
-	users := application2.Users{
-		Queries: queries,
-	}
-	applicationDependencies := application3.Dependencies{
-		Users: users,
-	}
 	containerDependencies := &container.Dependencies{
-		Application:    applicationDependencies,
-		Infrastructure: dependencies,
+		Application:    dependencies,
+		Infrastructure: infrastructureDependencies,
 	}
 	serverServer := server.New(containerDependencies)
 	return serverServer

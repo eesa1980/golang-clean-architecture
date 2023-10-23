@@ -9,7 +9,8 @@
     "prod": "make prod",
     "lint": "make lint",
     "docker:build": "npm run build:prod && make docker_build",
-    "docker:run": "make docker_run"
+    "docker:run": "make docker_run",
+    "test": "make test"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.0.0",

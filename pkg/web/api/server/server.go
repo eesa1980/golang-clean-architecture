@@ -26,10 +26,10 @@ func New(
 ) Server {
 	newApp := app.New(deps)
 
-	config := deps.Infrastructure.Config
+	config := deps.Infrastructure.ApplicationConfig
 
 	url := fmt.Sprintf(":%s", config.Port)
-	log.Infof("Application is now running on http://%s/swagger", url)
+	log.Infof("Application is now running on http://127.0.0.1%s/swagger", url)
 
 	err := newApp.Listen(url)
 
